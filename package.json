@@ -1,0 +1,19 @@
+{
+  "name": "movies-api",
+  "version": "1.0.0",
+  "description": "Movies API par o treinamento do GPES",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carl0sR0ma0/movies-api.git"
+  },
+  "author": "carl0sR0ma0",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carl0sR0ma0/movies-api/issues"
+  },
+  "homepage": "https://github.com/carl0sR0ma0/movies-api#readme"
+}
