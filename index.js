@@ -27,5 +27,10 @@ app.get('/', (req, res) => {
   res.send({ message: `API ouvindo na porta ${PORT}`})
 })
 
+//-- Configurando o endpoint * que é retornado uma URL não requisitada não existe --//
+app.use('*', (req, res) =>{
+  res.send({ message: 'API não encontrada!' })
+})
+
 //-- Iniciando o servidor da API na porta configurada na variável de ambiente ou 3000
 app.listen(PORT, () => console.log(`API ouvindo na porta ${PORT}`))
