@@ -25,4 +25,4 @@ const MovieSchema = new Schema({
     versionKey: false
   }
 )
-module.exports = model('fileschema', FileSchema)
+module.exports = model('fileschema', MovieSchema)
