@@ -1,21 +1,21 @@
 const { Schema, model } = require('mongoose')
 
-const MovieSchema = new Schema({
-  name: {
+const filmeSchema = new Schema({
+  nome: {
     type: String,
     required: true,
     trim: true
   },
-  genre: {
+  genero: {
     type: String,
     required: false,
     trim: true
   },
-  age: {
+  ano: {
     type: Number,
     required: false
   },
-  older18: {
+  maior18: {
     type: Boolean,
     required: true
   }
@@ -25,4 +25,4 @@ const MovieSchema = new Schema({
     versionKey: false
   }
 )
-module.exports = model('fileschema', MovieSchema)
+module.exports = model('filmeschema', filmeSchema)

@@ -1,10 +1,10 @@
-const movieschema = require('./../models/movies.models')
+const filmeschema = require('../models/filmes.models')
 
-class Movie {
-  crateMovie(req, res) {
+class Filme {
+  criarFilme(req, res) {
     const body = req.body
 
-    movieschema.create(body, (err, data) => {
+    filmeschema.create(body, (err, data) => {
       if (err) {
         res.status(500).send({message: "Houve um erro ao processar a sua requisição", error: err})
       } else {
@@ -13,4 +13,4 @@ class Movie {
     })
   }
 }
-module.exports = new Movie()
+module.exports = new Filme()
