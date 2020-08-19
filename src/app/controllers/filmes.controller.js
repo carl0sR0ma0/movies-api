@@ -1,5 +1,10 @@
 const filmeschema = require('../models/filmes.models')
 
+/**
+ * Função para definir quais campos devem ser buscados ao realizar um find no banco de dados
+ * O parâmetro campos é obrigatório
+ * @param {*} campos 
+ */
 function definirCamposDeBusca(campos) {
   if (campos == 'maior18') {
     return { nome: 1, maior18: 1 }
@@ -11,6 +16,8 @@ function definirCamposDeBusca(campos) {
 }
 
 class Filme {
+
+  /**Método para inserir um dado no banco de dados */
   criarFilme(req, res) {
     const body = req.body
 
@@ -23,6 +30,9 @@ class Filme {
     })
   }
 
+  /**
+   * Método para visualizar todos os campos do banco de dados, utilizando QueryParams para definir o
+   * valor a ser passado na função para definir os campos que devem ser buscados */
   visualizarFilmes(req, res) {
     const campos = req.query.campos
     
@@ -35,6 +45,7 @@ class Filme {
     })
   }
 
+  /** Método para visualizar apenas um dado de acorddo com o parâmetro obrigatório especificado na URL */
   visualizarUmFilme(req, res) {
     const nome = req.params.nome
 
