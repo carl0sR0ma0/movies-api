@@ -3,7 +3,6 @@ const filmeschema = require('../models/filmes.models')
 /**
  * Função para definir quais campos devem ser buscados ao realizar um find no banco de dados
  * O parâmetro campos é obrigatório
- * @param {*} campos 
  */
 function definirCamposDeBusca(campos) {
   if (campos == 'maior18') {
@@ -17,7 +16,7 @@ function definirCamposDeBusca(campos) {
 
 class Filme {
 
-  /**Método para inserir um dado no banco de dados */
+  //-- Método para inserir um dado no banco de dados
   criarFilme(req, res) {
     const body = req.body
 
@@ -30,9 +29,10 @@ class Filme {
     })
   }
 
-  /**
-   * Método para visualizar todos os campos do banco de dados, utilizando QueryParams para definir o
-   * valor a ser passado na função para definir os campos que devem ser buscados */
+  /** Método para visualizar todos os campos do banco de dados,
+   *  utilizando QueryParams para definir o valor a ser passado na função para definir os campos que
+   *  devem ser buscados
+  */ 
   visualizarFilmes(req, res) {
     const campos = req.query.campos
     
@@ -45,7 +45,7 @@ class Filme {
     })
   }
 
-  /** Método para visualizar apenas um dado de acorddo com o parâmetro obrigatório especificado na URL */
+  //-- Método para visualizar apenas um dado de acorddo com o parâmetro obrigatório especificado na URL
   visualizarUmFilme(req, res) {
     const nome = req.params.nome
 
@@ -59,13 +59,36 @@ class Filme {
   }
 
   atualizarUmFilme(req, res) {
-    const nome = req.params.nome
+    //-- Guarda na constante nomeDoFilmeParaSerAtualizado o parâmetro nome que vem da URL do endpoint.
+    const nomeDoFilmeParaSerAtualizado = req.params.nome
+    //-- Guarda na constante novoNomeDoFilme o valor da chave nome que vem do corpo da requisição
+    const novoNomeDoFilme = req.body.nome
     
-    filmeschema.updateOne({nome: nome}, { $set: req.body }, (err, data) => {
+    /**
+     * Chamando o método de update do banco de dados e passando o nome que deve ser atualizado, e
+     * e passando para $set o novo nome através do corpo da requisição
+    **/   
+    filmeschema.updateOne({nome: nomeDoFilmeParaSerAtualizado}, { $set: req.body }, (err, data) => {
       if (err) {
-        res.status(500).send({message: "Houve um erro ao processar a sua requisição", error: err})
+        //-- Aqui só ocorre quando tem algum erro ao tentar atualizar
+        res.status(500).send({message: "Houve um erro ao processar a sua atualização", error: err})
       } else {
-        res.status(200).send({message: `Filme ${nome} foi atualizado com sucesso`, update: data})
+        //-- Verifica se n(numero de registros modificados) é maior que 0, ou seja que o registro foi modificado
+        if (data.n > 0) {
+          //-- Aí ele faz uma busca, procurando no banco o novo nome do filme passado
+          filmeschema.findOne({nome: novoNomeDoFilme}, (err, result) => {
+            if (err) {
+              res.status(500).send({message: "Houve um erro ao processar a sua busca no filme atualizado", error: err})
+            } else {
+              /*
+               * Se não tiver erro ele retorna uma mensagem dizendo que o filme que foi atualizado
+               * teve o nome atualizado para o novo nome do filme
+               */
+              res.status(200).send({message: `Filme ${nomeDoFilmeParaSerAtualizado} teve seu nome 
+              atualizado para ${novoNomeDoFilme}`, filme: result })
+            }
+          })
+        }
       }
     })
   }
