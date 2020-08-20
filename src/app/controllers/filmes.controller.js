@@ -92,6 +92,20 @@ class Filme {
       }
     })
   }
+  
+  apagarUmFilme(req, res) {
+    //-- Guardando numa variável o valor do parâmetro nome do endpoint.
+    const nomeDoFilmeParaSerApagado = req.params.nome
+
+    //-- Chamando o método deleteOne que vai apagar o registro do banco de dados, nele passa o nome do filme que vai ser apagado.
+    filmeschema.deleteOne({nome: nomeDoFilmeParaSerApagado}, (err) => {
+      if (err) {
+        res.status(500).send({message: "Houve um erro ao apagar um", error: err })
+      } else {
+        res.status(200).send({message: `O filme ${nomeDoFilmeParaSerApagado} foi apagado com sucesso!`})
+      }
+    })
+  }
 }
 
 module.exports = new Filme()
