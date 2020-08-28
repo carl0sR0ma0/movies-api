@@ -42,5 +42,17 @@ class Diretor{
         }
       })
   }
+
+  criarUmDiretor(req, res) {
+    const reqBody = req.body
+
+    diretor.create(reqBody, (err, data) => {
+      if (err) {
+        res.status(500).send({message: "Houve um erro ao processar sua requisição", error: err })
+      } else {
+        res.status(200).send({message: "Diretor criado com sucesso", data: data })
+      }
+    })
+  }
 }
 module.exports = new Diretor()
