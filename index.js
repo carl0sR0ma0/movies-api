@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
   res.send({ message: `API ouvindo na porta ${PORT}`})
 })
 
-app.use('/filmes', FilmeRotas)
+app.use('/filme', FilmeRotas)
 app.use('/diretor', DiretorRotas)
 
 //-- Configurando o endpoint * que é retornado uma URL não requisitada não existe --//

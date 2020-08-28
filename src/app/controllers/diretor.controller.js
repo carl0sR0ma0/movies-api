@@ -32,10 +32,7 @@ class Diretor{
           res.status(500).send({message: "Houve um erro ao processar sua requisição", error: err })
         } else {
           if (data.length <= 0) {
-            res.status(200).send({message: `O diretor ${nomeDiretor} não existe no banco de dados` })
-          }
-          else if (data['filmes'].length <= 0) {
-            res.status(200).send({message: `O diretor ${nomeDiretor} não possui nenhum filme cadastrado` })
+            res.status(200).send({message: `O diretor ${nomeDiretor} não existe no banco de dados` })          
           } else {
             res.status(200).send({message: `O diretor ${nomeDiretor} possui filmes cadastrados`, data: data })
           }
