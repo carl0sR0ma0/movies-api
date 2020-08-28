@@ -8,6 +8,7 @@ const database = require('./src/config/database')
 
 //-- Importando rotas da aplicação --//
 const FilmeRotas = require('./src/app/routes/filmes.routes')
+const DiretorRotas = require('./src/app/routes/diretor.routes')
 
 //-- Configurando o body parser --//
 app.use(bodyParser.urlencoded({ extended:true }))
@@ -31,6 +32,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/filmes', FilmeRotas)
+app.use('/diretor', DiretorRotas)
 
 //-- Configurando o endpoint * que é retornado uma URL não requisitada não existe --//
 app.use('*', (req, res) =>{
