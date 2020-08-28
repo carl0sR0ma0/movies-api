@@ -1,4 +1,4 @@
-const filmeschema = require('../models/filmes.models')
+const filmeschema = require('../models/filmes.model')
 
 /**
  * Função para definir quais campos devem ser buscados ao realizar um find no banco de dados
