@@ -11,7 +11,7 @@ const filmeSchema = new Schema({
     required: true,
     trim: true
   },
-  ano: {
+  dataLancamento: {
     type: Number,
     required: false
   },
@@ -27,6 +27,11 @@ const filmeSchema = new Schema({
     type: Number
   },
   imagem: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  sinopse: {
     type: String,
     required: true,
     trim: true
