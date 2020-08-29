@@ -66,7 +66,7 @@ class Filme {
       if (err) {
         res.status(500).send({message: "Houve um erro ao processar a sua requisição", error: err})
       } else {
-        if (data.length == null) {
+        if (data == null) {
           res.status(200).send({message: `Filme não encontrado na base de dados`, })
         } else {
           res.status(200).send({message: `Filme ${nomeFilme} foi recuperado com sucesso`, data: data})
