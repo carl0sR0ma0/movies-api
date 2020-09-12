@@ -7,7 +7,8 @@ const PORT = process.env.PORT || 3000
 const database = require('./src/config/database')
 
 //-- Importando rotas da aplicação --//
-const FilmeRotas = require('./src/app/routes/filmes.routes')
+const FilmeRotas = require('./src/app/routes/filme.routes')
+const DiretorRotas = require('./src/app/routes/diretor.routes')
 
 //-- Configurando o body parser --//
 app.use(bodyParser.urlencoded({ extended:true }))
@@ -30,11 +31,12 @@ app.get('/', (req, res) => {
   res.send({ message: `API ouvindo na porta ${PORT}`})
 })
 
-app.use('/filmes', FilmeRotas)
+app.use('/filme', FilmeRotas)
+app.use('/diretor', DiretorRotas)
 
 //-- Configurando o endpoint * que é retornado uma URL não requisitada não existe --//
 app.use('*', (req, res) =>{
-  res.send({ message: 'API não encontrada!' })
+  res.status(404).send({ message: 'API não encontrada!' })
 })
 
 //-- Iniciando o servidor da API na porta configurada na variável de ambiente ou 3000
