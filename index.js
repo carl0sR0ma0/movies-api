@@ -36,7 +36,7 @@ app.use('/diretor', DiretorRotas)
 
 //-- Configurando o endpoint * que é retornado uma URL não requisitada não existe --//
 app.use('*', (req, res) =>{
-  res.send({ message: 'API não encontrada!' })
+  res.status(404).send({ message: 'API não encontrada!' })
 })
 
 //-- Iniciando o servidor da API na porta configurada na variável de ambiente ou 3000
