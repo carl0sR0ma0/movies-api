@@ -15,7 +15,7 @@ const filmeSchema = new Schema({
     type: Number,
     required: false
   },
-  classificacao: {
+  classificacaoIndicativa: {
     type: String,
     required: false
   },
