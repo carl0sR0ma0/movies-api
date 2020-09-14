@@ -12,7 +12,7 @@ const filmeSchema = new Schema({
     trim: true
   },
   dataLancamento: {
-    type: Number,
+    type: Date,
     required: false
   },
   classificacaoIndicativa: {
