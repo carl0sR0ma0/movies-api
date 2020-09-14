@@ -51,5 +51,21 @@ class Diretor{
       }
     })
   }
+
+  validarNomeDiretor(req, res) {
+    const nome = req.query.nome.replace(/%20/g, " ")
+
+    diretor.find({ nome: { '$regex': `^${nome}$`, '$options': 'i' } }, (err, result) => {
+      if (err) {
+        res.status(500).send({message: "Houve um erro ao processo ao processar sua requisição" })
+      } else {
+        if (result.length > 0) {
+          res.status(200).send({message: "Já existe um diretor cadastrado com esse nome", data: result.length })
+        } else {
+          res.status(200).send({message: "Diretor disponível", data: result.length })
+        }
+      }
+    })
+  }
 }
 module.exports = new Diretor()
