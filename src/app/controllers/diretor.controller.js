@@ -3,7 +3,7 @@ const diretor = require('./../models/diretor.model')
 class Diretor{
 
   buscarTodosOsDiretores(req, res) {
-    diretor.find({}, { filmes: 0})
+    diretor.find({})
       .sort({ nome: 1 })
       .exec((err, data) => {
         if (err) {
