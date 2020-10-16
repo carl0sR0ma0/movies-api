@@ -3,7 +3,7 @@ const diretor = require('./../models/diretor.model')
 class Diretor{
 
   buscarTodosOsDiretores(req, res) {
-    diretor.find({}, { filmes: 0})
+    diretor.find({})
       .sort({ nome: 1 })
       .exec((err, data) => {
         if (err) {
@@ -25,7 +25,7 @@ class Diretor{
       res.status(400).send({message: "O nome do diretor deve ser obrigatoriamente preenchido" })
     }
 
-    diretor.find({ nome: nomeDiretor })
+    diretor.findOne({ nome: nomeDiretor })
       .populate('filmes', { nome: 1, imagem: 1 })
       .exec((err, data) => {
         if (err) {
@@ -48,6 +48,22 @@ class Diretor{
         res.status(500).send({message: "Houve um erro ao processar sua requisição", error: err })
       } else {
         res.status(200).send({message: "Diretor criado com sucesso", data: data })
+      }
+    })
+  }
+
+  validarNomeDiretor(req, res) {
+    const nome = req.query.nome.replace(/%20/g, " ")
+
+    diretor.find({ nome: { '$regex': `^${nome}$`, '$options': 'i' } }, (err, result) => {
+      if (err) {
+        res.status(500).send({message: "Houve um erro ao processo ao processar sua requisição" })
+      } else {
+        if (result.length > 0) {
+          res.status(200).send({message: "Já existe um diretor cadastrado com esse nome", data: result.length })
+        } else {
+          res.status(200).send({message: "Diretor disponível", data: result.length })
+        }
       }
     })
   }

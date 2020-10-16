@@ -75,6 +75,22 @@ class Filme {
     })
   }
 
+  validarNomeFilme(req, res) {
+    const nome = req.query.nome.replace(/%20/g, " ")
+
+    filme.find({ nome: { '$regex': `^${nome}$`, '$options': 'i' } }, (err, result) => {
+      if (err) {
+        res.status(500).send({message: "Houve um erro ao processo ao processar sua requisição" })
+      } else {
+        if (result.length > 0) {
+          res.status(200).send({message: "Já existe um filme cadastrado com esse nome", data: result.length })
+        } else {
+          res.status(200).send({message: "Filme disponível", data: result.length })
+        }
+      }
+    })
+  }
+
   // atualizarUmFilme(req, res) {
   //   //-- Guarda na constante nomeDoFilmeParaSerAtualizado o parâmetro nome que vem da URL do endpoint.
   //   const nomeDoFilmeParaSerAtualizado = req.params.nome
