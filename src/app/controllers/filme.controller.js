@@ -91,6 +91,50 @@ class Filme {
     })
   }
 
+  update(req, res) {
+    const { movieId } = req.params
+    const reqBody = req.body
+    const directorId = reqBody['diretor']
+
+    filme.updateOne({ _id: movieId }, { $set: reqBody }, (err, filme) => {
+      if (err) {
+        res.status(500).send({message: "Houve um erro ao processo ao processar sua requisição" })
+      } else {
+        diretor.findOne({ filmes: movieId }, (err, result) => {
+          if (err) {
+            res.status(500).send({message: "Houve um erro ao processo ao processar sua requisição" })
+          } else {
+            if (result['_id'] == directorId) {
+              res.status(200).send({ message: "O Filme foi atualizado", data: filme })
+            } else {
+              result.filmes.pull(movieId)
+              result.save({}, (err) => {
+                if (err) {
+                  res.status(500).send({message: "Houve um erro ao processo ao processar sua requisição" })
+                } else {
+                  diretor.findById(directorId, (err, diretor) => {
+                    if (err) {
+                      res.status(500).send({message: "Houve um erro ao processo ao processar sua requisição" })
+                    } else {
+                      diretor.filmes.push(movieId)
+                      diretor.save({}, (err) => {
+                        if (err) {
+                          res.status(500).send({message: "Houve um erro ao processo ao processar sua requisição" })
+                        } else {
+                          res.status(200).send({ message: "O Filme foi atualizado", data: filme })
+                        }
+                      })
+                    }
+                  })
+                }
+              })
+            }
+          }
+        })
+      }
+    })
+  }
+
   // atualizarUmFilme(req, res) {
   //   //-- Guarda na constante nomeDoFilmeParaSerAtualizado o parâmetro nome que vem da URL do endpoint.
   //   const nomeDoFilmeParaSerAtualizado = req.params.nome
@@ -125,6 +169,7 @@ class Filme {
   //     }
   //   })
   // }
+  
   
   // apagarUmFilme(req, res) {
   //   //-- Guardando numa variável o valor do parâmetro nome do endpoint.
